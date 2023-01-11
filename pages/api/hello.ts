@@ -8,9 +8,15 @@ type Data = {
   name: string;
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ name: "John Doe" });
+  const getJSON = await fetch(
+    "https://3d.bk.tudelft.nl/opendata/cityjson/simplegeom/v1.1/cube.city.json"
+  );
+
+  const results = await getJSON.json();
+
+  res.status(200).json(results);
 }
